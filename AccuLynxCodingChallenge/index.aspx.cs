@@ -8,8 +8,10 @@ using System.Web.UI.WebControls;
 
 using System.Net;
 using System.IO;
+using System.IO.Compression;
 
-using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
+
 
 namespace AccuLynxCodingChallenge
 {
@@ -23,7 +25,7 @@ namespace AccuLynxCodingChallenge
             
             string jsonString = Do_Web_Request(jsonURL);
 
-            Parse_JSON(jsonString);
+         //   Parse_JSON(jsonString);
 
             Set_User("dckuehn");
 
@@ -38,29 +40,56 @@ namespace AccuLynxCodingChallenge
          */
         protected string Do_Web_Request(string jsonURL)
         {
-            WebRequest jsonRequest;
 
-            jsonRequest = WebRequest.Create(jsonURL);
+            //Create a Request
+            WebRequest jsonRequest = WebRequest.Create(jsonURL) as WebRequest;
 
-            jsonRequest.ContentType = "application/json; charset=utf-8";
+            jsonRequest.Method = WebRequestMethods.Http.Get;
+            jsonRequest.ContentType = "application/json; charset=UTF8";
+            
+            //Get the Response
+            HttpWebResponse jsonResponse = (HttpWebResponse)jsonRequest.GetResponse();
 
-            Stream jsonStream;
-
-            jsonStream = jsonRequest.GetResponse().GetResponseStream();
-
-            StreamReader jsonReader = new StreamReader(jsonStream);
-
-            string jsonString = jsonReader.ReadToEnd();
-
-            jsonLabel.Text = jsonString.ToString();
+            string jsonString = ExtractJsonResponse(jsonResponse);
 
             return jsonString;
         }
 
-        protected void Parse_JSON(string jsonString)
+        /* This method unzips the the json provided the by WebRequest
+         * 
+         */
+        private string ExtractJsonResponse(WebResponse response)
         {
+            string json;
+
+            var outStream = new MemoryStream();
+            var zipStream = new GZipStream(response.GetResponseStream(), CompressionMode.Decompress);
+
+            zipStream.CopyTo(outStream);
+            outStream.Seek(0, SeekOrigin.Begin);
+
+            using (var reader = new StreamReader(outStream, System.Text.Encoding.UTF8))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return json;
 
         }
+
+        protected void Parse_JSON(string jsonString)
+        {
+            JsonTextReader jsonReader = new JsonTextReader(new StringReader(jsonString));
+
+            string read = jsonReader.ReadAsString();
+
+            if (read.Contains("items")){
+                   jsonLabel.Text = "true";
+            }
+            
+        }
+
+
 
         protected void Set_User(string username)
         {
