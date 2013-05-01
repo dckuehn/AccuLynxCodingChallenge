@@ -25,7 +25,7 @@ namespace AccuLynxCodingChallenge
             
             string jsonString = Do_Web_Request(jsonURL);
 
-         //   Parse_JSON(jsonString);
+            Parse_JSON(jsonString);
 
             Set_User("dckuehn");
 
@@ -81,12 +81,26 @@ namespace AccuLynxCodingChallenge
         {
             JsonTextReader jsonReader = new JsonTextReader(new StringReader(jsonString));
 
-            string read = jsonReader.ReadAsString();
+            Boolean foundItems = false;
+            while (jsonReader.Read())
+            {
+                if (jsonReader.Value == null)
+                    continue;
 
-            if (read.Contains("items")){
-                   jsonLabel.Text = "true";
+                if (foundItems == true)
+                {
+                    jsonReader.Read();
+                    jsonLabel.Text = jsonReader.Value.ToString();
+                    foundItems = false;
+                }
+                if (jsonReader.Value.ToString() == "items")
+                {
+                    foundItems = true;
+                }
+
+               // jsonLabel.Text = jsonReader.Value.ToString();
+
             }
-            
         }
 
 

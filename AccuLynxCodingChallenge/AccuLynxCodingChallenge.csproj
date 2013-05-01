@@ -80,6 +80,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="QuestionDataObject.cs" />
+    <Compile Include="UserDataObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">
