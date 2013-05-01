@@ -13,39 +13,39 @@ namespace AccuLynxCodingChallenge {
     public partial class index {
         
         /// <summary>
-        /// form1 control.
+        /// questionLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label questionLabel;
         
         /// <summary>
-        /// question control.
+        /// userLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label question;
+        protected global::System.Web.UI.WebControls.Label userLabel;
         
         /// <summary>
-        /// user control.
+        /// reputationSumLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label user;
+        protected global::System.Web.UI.WebControls.Label reputationSumLabel;
         
         /// <summary>
-        /// reputationSum control.
+        /// jsonLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label reputationSum;
+        protected global::System.Web.UI.WebControls.Label jsonLabel;
     }
 }
