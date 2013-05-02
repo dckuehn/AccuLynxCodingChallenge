@@ -24,13 +24,6 @@ namespace AccuLynxCodingChallenge
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-            Set_User("dckuehn");
-
-            Set_Question("How to write a simple ASP.NET page in C#?");
-
-            Set_Total_Reputation(300);
-
             string jsonURL;
             jsonURL = "https://api.stackexchange.com/2.1/questions?order=desc&sort=activity&site=stackoverflow";
             
@@ -211,30 +204,32 @@ namespace AccuLynxCodingChallenge
                 }
             }
 
-            Set_Question(questionList.ElementAt(highestScoreId).Get_Title());
+            Set_Question(questionList.ElementAt(highestScoreId).Get_Title(), highestScore);
             Set_Total_Reputation(totalReputation);
-            Set_User(questionList.ElementAt(highestReputationId).Get_User().Get_Display_Name());
-            jsonLabel.Text = highestReputation.ToString();
-         //   jsonLabel.Text = numberOfQuestions.ToString();  
-
+            Set_User(questionList.ElementAt(highestReputationId).Get_User().Get_Display_Name(), highestReputation);
 
             foreach (QuestionDataObject question in questionList){
                 Add_Question_To_List(question);
             }
 
 
+            //Done!!
+
         }
 
 
 
-        protected void Set_User(string username)
+        protected void Set_User(string username, int highestReputation)
         {
             userLabel.Text = username;
+            jsonLabel.Text = highestReputation.ToString();
+
         }
 
-        protected void Set_Question(string question)
+        protected void Set_Question(string question, int score)
         {
            questionLabel.Text = question;
+           questionScore.Text = score.ToString();
         }
 
         protected void Set_Total_Reputation(int reputation)
@@ -247,7 +242,7 @@ namespace AccuLynxCodingChallenge
 
             Image gravatar = new Image();
             gravatar.ImageUrl = question.Get_User().Get_Profile_Image();
-            gravatar.Attributes.Add("style", "float:left; padding:5px;");
+            gravatar.Attributes.Add("style", "float:left; padding:5px; height:80px; width:80px;");
 
             Label titleLabel = new Label();
             string title = "Question: " + question.Get_Title() + "<br/>";
@@ -263,7 +258,7 @@ namespace AccuLynxCodingChallenge
 
             //number of answers
             Label answersLabel = new Label();
-            answersLabel.Text = "Number of Answers:" + question.Get_Answer_Count().ToString() + "<br/>";
+            answersLabel.Text = "Number of Answers: " + question.Get_Answer_Count().ToString() + "<br/>";
 
             //total score
             Label scoreLabel = new Label();

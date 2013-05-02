@@ -13,26 +13,26 @@
         <br />
         The Question with the highest score:
         <asp:Label ID="questionLabel" runat="server" Text="Question"></asp:Label>
+        &nbsp;with a score of 
+         <asp:Label ID="questionScore" runat="server" Text="score"></asp:Label>
         <br />
         <br />
         The user with the most repuation is : <asp:Label ID="userLabel" runat="server" Text="User"></asp:Label>
-        <br />
+        &nbsp;with an astounding* 
+         <asp:Label ID="jsonLabel" runat="server" Text="json"></asp:Label>
+            &nbsp;reputation!<br />
         <br />
         The sum of all the repuations is :
         <asp:Label ID="reputationSumLabel" runat="server" Text="Reputation"></asp:Label>
         <br />
         <br />
-        <br />
-        Here goes the list of the most recent questions.<br />
-        <br />
-        And here is all the JSON?: 
-         <asp:Label ID="jsonLabel" runat="server" Text="json"></asp:Label>
-            <p>
+            *- actual reputation may or may not be astounding.<br />
+            <br />
+            <br />
+            <br />
+&nbsp;<p>A list of all the most recent questions:
                 &nbsp;</p>
-            <p>
-                &nbsp;</p>
-            <p>
-                &nbsp;</p>
+
         </form>
 </body>
 </html>
