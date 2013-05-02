@@ -7,6 +7,7 @@
     <title>AccuLynx Junior Developer Coding Challenge</title>
 </head>
 <body>
+        <form id="form1" runat="server">
         AccuLynx Junior Developer Coding Challenge!<br />
         <br />
         <br />
@@ -26,5 +27,12 @@
         <br />
         And here is all the JSON?: 
          <asp:Label ID="jsonLabel" runat="server" Text="json"></asp:Label>
+            <p>
+                &nbsp;</p>
+            <p>
+                &nbsp;</p>
+            <p>
+                &nbsp;</p>
+        </form>
 </body>
 </html>

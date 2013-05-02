@@ -176,6 +176,9 @@ namespace AccuLynxCodingChallenge
                                 break;
                                 //required
                             case "profile_image":
+                                jsonReader.Read();
+                                string url = jsonReader.Value.ToString();
+                                newUser.Set_Profile_Image(url);
                                 break;
                                 //Skipping this link to because it will miss the other link
                             //case "link":
@@ -213,6 +216,13 @@ namespace AccuLynxCodingChallenge
             Set_User(questionList.ElementAt(highestReputationId).Get_User().Get_Display_Name());
             jsonLabel.Text = highestReputation.ToString();
          //   jsonLabel.Text = numberOfQuestions.ToString();  
+
+
+            foreach (QuestionDataObject question in questionList){
+                Add_Question_To_List(question);
+            }
+
+
         }
 
 
@@ -230,6 +240,42 @@ namespace AccuLynxCodingChallenge
         protected void Set_Total_Reputation(int reputation)
         {
             reputationSumLabel.Text = reputation.ToString();
+        }
+
+        protected void Add_Question_To_List(QuestionDataObject question)
+        {
+
+            Image gravatar = new Image();
+            gravatar.ImageUrl = question.Get_User().Get_Profile_Image();
+            gravatar.Attributes.Add("style", "float:left; padding:5px;");
+
+            Label titleLabel = new Label();
+            string title = "Question: " + question.Get_Title() + "<br/>";
+            titleLabel.Text = title;
+
+            Label horizontalRow = new Label();
+            horizontalRow.Text = "<hr>";
+
+            //link
+            Label linkLabel = new Label();
+            string url = question.Get_Link();
+            linkLabel.Text = "<a href=" + url + ">  " + url + "</a><br/>";
+
+            //number of answers
+            Label answersLabel = new Label();
+            answersLabel.Text = "Number of Answers:" + question.Get_Answer_Count().ToString() + "<br/>";
+
+            //total score
+            Label scoreLabel = new Label();
+            scoreLabel.Text = "Score: " + question.Get_Score().ToString() + "<br/>";
+
+            form1.Controls.Add(gravatar);
+            form1.Controls.Add(titleLabel);
+            form1.Controls.Add(linkLabel);
+            form1.Controls.Add(answersLabel);
+            form1.Controls.Add(scoreLabel);
+            form1.Controls.Add(horizontalRow);
+
         }
     }
 }
