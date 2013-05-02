@@ -29,7 +29,7 @@ namespace AccuLynxCodingChallenge
 
             Set_Question("How to write a simple ASP.NET page in C#?");
 
-            Set_Total_Repuation(300);
+            Set_Total_Reputation(300);
 
             string jsonURL;
             jsonURL = "https://api.stackexchange.com/2.1/questions?order=desc&sort=activity&site=stackoverflow";
@@ -91,6 +91,8 @@ namespace AccuLynxCodingChallenge
             int highestScore = 0;
             int highestScoreId = 0;
             int totalReputation = 0;
+            int highestReputation = 0;
+            int highestReputationId = 0;
 
             while (jsonReader.Read())
             {
@@ -128,6 +130,11 @@ namespace AccuLynxCodingChallenge
                                 jsonReader.Read();
                                 int score = int.Parse(jsonReader.Value.ToString());
                                 newQuestion.Set_Score(score);
+                                if (score > highestScore)
+                                {
+                                    highestScore = score;
+                                    highestScoreId = numberOfQuestions;
+                                }
                                 break;
                                 //required
                             case "answer_count":
@@ -140,7 +147,6 @@ namespace AccuLynxCodingChallenge
                                 jsonReader.Read();
                                 string title = jsonReader.Value.ToString();
                                 newQuestion.Set_Title(title);
-                                Set_Question(title);
                                 break;
                             case "tags":
                                 break;
@@ -151,8 +157,20 @@ namespace AccuLynxCodingChallenge
                             case "user_id":
                                 break;
                             case "display_name":
+                                jsonReader.Read();
+                                string name = jsonReader.Value.ToString();
+                                newUser.Set_Display_Name(name);
                                 break;
                             case "reputation":
+                                jsonReader.Read();
+                                int reputation = int.Parse(jsonReader.Value.ToString());
+                                totalReputation += reputation;
+
+                                if (reputation > highestReputation)
+                                {
+                                    highestReputation = reputation;
+                                    highestReputationId = numberOfQuestions;
+                                }
                                 break;
                             case "user_type":
                                 break;
@@ -190,9 +208,11 @@ namespace AccuLynxCodingChallenge
                 }
             }
 
-        //    Set_Question(questionList.ElementAt(highestScoreId--).Get_Title());
-        //    Set_Total_Repuation(totalReputation);
-            jsonLabel.Text = numberOfQuestions.ToString();  
+            Set_Question(questionList.ElementAt(highestScoreId).Get_Title());
+            Set_Total_Reputation(totalReputation);
+            Set_User(questionList.ElementAt(highestReputationId).Get_User().Get_Display_Name());
+            jsonLabel.Text = highestReputation.ToString();
+         //   jsonLabel.Text = numberOfQuestions.ToString();  
         }
 
 
@@ -204,11 +224,10 @@ namespace AccuLynxCodingChallenge
 
         protected void Set_Question(string question)
         {
-           
            questionLabel.Text = question;
         }
 
-        protected void Set_Total_Repuation(int reputation)
+        protected void Set_Total_Reputation(int reputation)
         {
             reputationSumLabel.Text = reputation.ToString();
         }
