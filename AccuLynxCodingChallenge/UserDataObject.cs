@@ -8,16 +8,11 @@ namespace AccuLynxCodingChallenge
     public class UserDataObject
     {
         private int user_id;
-
         private string display_name;
-
         private int reputation;
-
         private string user_type;
-
         private string profile_image;
-
-        private string link;
+        public string link;
 
         public void Set_User_Id(int userID)
         {
@@ -47,6 +42,46 @@ namespace AccuLynxCodingChallenge
         public string Get_Profile_Image()
         {
             return profile_image;
+        }
+
+        public void Set_Reputation(int userReputation)
+        {
+            reputation = userReputation;
+        }
+
+        public int Get_Repuation()
+        {
+            return reputation;
+        }
+
+        public void Set_User_TYpe(string userType)
+        {
+            user_type = userType;
+        }
+
+        public string Get_User_Type()
+        {
+            return user_type;
+        }
+
+        public void Set_User_Image(string profileImageURI)
+        {
+            profile_image = profileImageURI;
+        }
+
+        public string Get_User_Image()
+        {
+            return profile_image;
+        }
+
+        public void Set_User_Link(string userURI)
+        {
+            link = userURI;
+        }
+
+        public string Get_User_Link()
+        {
+            return link;
         }
     }
 }

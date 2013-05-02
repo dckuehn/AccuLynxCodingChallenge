@@ -11,14 +11,25 @@ using System.IO;
 using System.IO.Compression;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace AccuLynxCodingChallenge
 {
     public partial class index : System.Web.UI.Page
     {
+        List<QuestionDataObject> questionList = new List<QuestionDataObject>();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            Set_User("dckuehn");
+
+            Set_Question("How to write a simple ASP.NET page in C#?");
+
+            Set_Total_Repuation(300);
 
             string jsonURL;
             jsonURL = "https://api.stackexchange.com/2.1/questions?order=desc&sort=activity&site=stackoverflow";
@@ -27,11 +38,6 @@ namespace AccuLynxCodingChallenge
 
             Parse_JSON(jsonString);
 
-            Set_User("dckuehn");
-
-            Set_Question("How to write a simple ASP.NET page in C#?");
-
-            Set_Total_Repuation(300);
         }
 
         /*
@@ -81,26 +87,112 @@ namespace AccuLynxCodingChallenge
         {
             JsonTextReader jsonReader = new JsonTextReader(new StringReader(jsonString));
 
-            Boolean foundItems = false;
+            int numberOfQuestions = 0;
+            int highestScore = 0;
+            int highestScoreId = 0;
+            int totalReputation = 0;
+
             while (jsonReader.Read())
             {
                 if (jsonReader.Value == null)
                     continue;
 
-                if (foundItems == true)
+                if (jsonReader.Value.ToString() == "question_id")
                 {
-                    jsonReader.Read();
-                    jsonLabel.Text = jsonReader.Value.ToString();
-                    foundItems = false;
-                }
-                if (jsonReader.Value.ToString() == "items")
-                {
-                    foundItems = true;
-                }
 
-               // jsonLabel.Text = jsonReader.Value.ToString();
+                    QuestionDataObject newQuestion = new QuestionDataObject();
+                    UserDataObject newUser = new UserDataObject();
 
+                    bool finishedQuestion = false;
+                    bool skippedUserLink = false;
+
+                    while (jsonReader.Read())
+                    {
+                        //Parse Question
+
+
+                        if (jsonReader.Value == null)
+                            continue;
+
+                        string switchable = jsonReader.Value.ToString();
+                        switch (switchable)
+                        {
+                            case "last_edit_date":
+                                break;
+                            case "create_date":
+                                break;
+                            case "last_activity_date":
+                                break;
+                                //required
+                            case "score":
+                                jsonReader.Read();
+                                int score = int.Parse(jsonReader.Value.ToString());
+                                newQuestion.Set_Score(score);
+                                break;
+                                //required
+                            case "answer_count":
+                                jsonReader.Read();
+                                int answer_count = int.Parse(jsonReader.Value.ToString());
+                                newQuestion.Set_Answer_Count(answer_count);
+                                break;
+                                //required
+                            case "title":
+                                jsonReader.Read();
+                                string title = jsonReader.Value.ToString();
+                                newQuestion.Set_Title(title);
+                                Set_Question(title);
+                                break;
+                            case "tags":
+                                break;
+                            case "view_count":
+                                break;
+                            case "owner":
+                                break;
+                            case "user_id":
+                                break;
+                            case "display_name":
+                                break;
+                            case "reputation":
+                                break;
+                            case "user_type":
+                                break;
+                                //required
+                            case "profile_image":
+                                break;
+                                //Skipping this link to because it will miss the other link
+                            //case "link":
+                              //  break;
+                            case "accept_rate":
+                                break;
+                                //required, two items named link, first will skip, set skipped to true
+                                // second link will be taken as question's individual link
+                            case "link":
+                                if (skippedUserLink)
+                                {
+                                    jsonReader.Read();
+                                    string link = jsonReader.Value.ToString();
+                                    newQuestion.Set_Link(link);
+                                    finishedQuestion = true;
+                                }
+                                skippedUserLink = true;
+                                break;
+                        }
+                        if (finishedQuestion)
+                            break;
+                    }
+
+                    // Connect User and Question
+                    newQuestion.Set_User(newUser);
+                    // Add Question to List
+                    questionList.Add(newQuestion);
+
+                    numberOfQuestions++;
+                }
             }
+
+        //    Set_Question(questionList.ElementAt(highestScoreId--).Get_Title());
+        //    Set_Total_Repuation(totalReputation);
+            jsonLabel.Text = numberOfQuestions.ToString();  
         }
 
 

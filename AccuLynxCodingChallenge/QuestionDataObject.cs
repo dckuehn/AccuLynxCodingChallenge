@@ -13,24 +13,22 @@ namespace AccuLynxCodingChallenge
 
         private int question_id;
 
+        // Not going to worry about these right now. Or ever. :(
+        /*
         private int last_edit_date;
         private int creation_date;
-        private int last_activity_date;
+        private int last_activity_date { get; set; }
+        */
 
         private int score;
-
         private int answer_count;
-
-        private string title;
+        public string title;
 
         //private string[] tags;
 
         private int view_count;
-
         private UserDataObject user;
-
         private string link;
-
         private Boolean is_answered;
 
 
@@ -54,9 +52,24 @@ namespace AccuLynxCodingChallenge
             return title;
         }
 
+        public void Set_View_Count(int count)
+        {
+            view_count = count;
+        }
+
+        public int Get_View_Count()
+        {
+            return view_count;
+        }
+
         public void Set_Link(string questionLink)
         {
             link = questionLink;
+        }
+
+        public string Get_Link()
+        {
+            return link;
         }
 
         public void Set_Answer_Count(int numberOfAnswers)
@@ -66,13 +79,8 @@ namespace AccuLynxCodingChallenge
 
         public int Get_Answer_Count()
         {
-            if (is_answered != null)
-            {
-                if (is_answered == false)
-                    return 0;
-                else
-                    return answer_count;
-            }
+            if (is_answered == false)
+                return 0;
             else
                 return answer_count;
         }
@@ -95,6 +103,16 @@ namespace AccuLynxCodingChallenge
         public int Get_Score()
         {
             return score;
+        }
+
+        public void Set_Is_Answered(Boolean answered)
+        {
+            is_answered = answered;
+        }
+
+        public Boolean Get_Is_Answered()
+        {
+            return is_answered;
         }
     }
 }
