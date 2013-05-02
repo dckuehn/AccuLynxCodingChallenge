@@ -76,6 +76,13 @@ namespace AccuLynxCodingChallenge
 
         }
 
+        /* This method parses the Json and creates Question/User objects.
+         *  It also keeps track of certain information regarding highest scores
+         *  and highest reputation.
+         *  
+         *  I choose to leave a lot of the unrequired attributes unimplemented, but
+         *  the logic exists in the objects to easily implement these if necessary.
+         */
         protected void Parse_JSON(string jsonString)
         {
             JsonTextReader jsonReader = new JsonTextReader(new StringReader(jsonString));
@@ -103,9 +110,8 @@ namespace AccuLynxCodingChallenge
 
                     while (jsonReader.Read())
                     {
+
                         //Parse Question
-
-
                         if (jsonReader.Value == null)
                             continue;
 
@@ -208,17 +214,17 @@ namespace AccuLynxCodingChallenge
             Set_Total_Reputation(totalReputation);
             Set_User(questionList.ElementAt(highestReputationId).Get_User().Get_Display_Name(), highestReputation);
 
+
+            //Add each question to form
             foreach (QuestionDataObject question in questionList){
                 Add_Question_To_List(question);
             }
-
-
             //Done!!
-
         }
 
-
-
+        /* Sets the user label with the username of the user with the most reputation.
+         * Also outputs the reputation number
+         */ 
         protected void Set_User(string username, int highestReputation)
         {
             userLabel.Text = username;
@@ -226,30 +232,37 @@ namespace AccuLynxCodingChallenge
 
         }
 
+        /* Sets the question label with the title of the question with the highest score
+        * Also outputs the score
+        */ 
         protected void Set_Question(string question, int score)
         {
            questionLabel.Text = question;
            questionScore.Text = score.ToString();
         }
 
+        // Set's the total reputation label
         protected void Set_Total_Reputation(int reputation)
         {
             reputationSumLabel.Text = reputation.ToString();
         }
 
+        /*
+         * This method takes a QuestionDataObject and addes the necessary
+         * information to the page.  Also adds some extra styling and
+         * formatting.
+         */
         protected void Add_Question_To_List(QuestionDataObject question)
         {
-
+            //Gravater image
             Image gravatar = new Image();
             gravatar.ImageUrl = question.Get_User().Get_Profile_Image();
             gravatar.Attributes.Add("style", "float:left; padding:5px; height:80px; width:80px;");
 
+            //Question title
             Label titleLabel = new Label();
             string title = "Question: " + question.Get_Title() + "<br/>";
             titleLabel.Text = title;
-
-            Label horizontalRow = new Label();
-            horizontalRow.Text = "<hr>";
 
             //link
             Label linkLabel = new Label();
@@ -263,6 +276,10 @@ namespace AccuLynxCodingChallenge
             //total score
             Label scoreLabel = new Label();
             scoreLabel.Text = "Score: " + question.Get_Score().ToString() + "<br/>";
+
+            //Horizontal row for formatting
+            Label horizontalRow = new Label();
+            horizontalRow.Text = "<hr>";
 
             form1.Controls.Add(gravatar);
             form1.Controls.Add(titleLabel);

@@ -7,7 +7,10 @@ namespace AccuLynxCodingChallenge
 {
 
 
-
+    /* QuestionDataObject matches objects contained in
+     * the json Object array "items".  All fields are named
+     * after their asscoiated json attributes.
+     */
     public class QuestionDataObject
     {
 

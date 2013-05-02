@@ -40,6 +40,15 @@ namespace AccuLynxCodingChallenge {
         protected global::System.Web.UI.WebControls.Label questionScore;
         
         /// <summary>
+        /// reputationSumLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reputationSumLabel;
+        
+        /// <summary>
         /// userLabel control.
         /// </summary>
         /// <remarks>
@@ -56,14 +65,5 @@ namespace AccuLynxCodingChallenge {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label jsonLabel;
-        
-        /// <summary>
-        /// reputationSumLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label reputationSumLabel;
     }
 }

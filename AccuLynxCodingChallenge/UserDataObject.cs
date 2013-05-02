@@ -5,6 +5,11 @@ using System.Web;
 
 namespace AccuLynxCodingChallenge
 {
+    /*
+     * UserDataObject matches fields asscoiated with the json
+     * object "owner".  All fields match the name of the attribute
+     * of which it is associated.
+     */
     public class UserDataObject
     {
         private int user_id;
